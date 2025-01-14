@@ -21,11 +21,15 @@ public class CustomerController {
 
     @RequestMapping(method = RequestMethod.GET)
     public List<Customer> getAllCustomers(){
+        log.debug("List Customers - in controller");
+
         return customerService.getCustomers();
     }
 
     @RequestMapping(value = "{customerId}", method = RequestMethod.GET)
     public Customer getCustomerById(@PathVariable("customerId") UUID customerId){
+        log.debug("Get Customer by Id - in controller");
+
         return customerService.getCustomerById(customerId);
     }
 }
