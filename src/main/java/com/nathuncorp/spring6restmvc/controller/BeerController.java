@@ -22,7 +22,7 @@ public class BeerController {
 
     @RequestMapping(method = RequestMethod.GET)
     public List<Beer> listBeers(){
-        log.debug("List Beers - in controller");
+        log.debug("List Beers - in controller 1234");
 
         return beerService.listBeers();
     }
