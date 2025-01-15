@@ -21,7 +21,7 @@ public class CustomerController {
     private final CustomerService customerService;
 
     @RequestMapping(value = "{customerId}", method = RequestMethod.PUT)
-    public ResponseEntity updateCustomerById(@PathVariable UUID customerId, @RequestBody Customer customer){
+    public ResponseEntity updateCustomerById(@PathVariable("customerId") UUID customerId, @RequestBody Customer customer){
         customerService.updateCustomerById(customerId, customer);
 
         return new ResponseEntity(HttpStatus.NO_CONTENT);
