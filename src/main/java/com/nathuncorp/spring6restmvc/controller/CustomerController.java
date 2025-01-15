@@ -20,6 +20,13 @@ import java.util.UUID;
 public class CustomerController {
     private final CustomerService customerService;
 
+    @RequestMapping(value = "{customerId}", method = RequestMethod.PUT)
+    public ResponseEntity updateCustomerById(@PathVariable UUID customerId, @RequestBody Customer customer){
+        customerService.updateCustomerById(customerId, customer);
+
+        return new ResponseEntity(HttpStatus.NO_CONTENT);
+    }
+
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity createNewCustomer(@RequestBody Customer newCustomer){
         log.debug("Create New Customer - in controller");
