@@ -1,5 +1,6 @@
 package com.nathuncorp.spring6restmvc.controller;
 
+import com.nathuncorp.spring6restmvc.model.Beer;
 import com.nathuncorp.spring6restmvc.model.Customer;
 import com.nathuncorp.spring6restmvc.service.CustomerService;
 import lombok.AllArgsConstructor;
