@@ -15,6 +15,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.UUID;
 
+import static com.nathuncorp.spring6restmvc.controller.CustomerController.CUSTOMER_PATH;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.hamcrest.core.Is.is;
 import static org.mockito.ArgumentMatchers.any;
@@ -46,7 +47,7 @@ class CustomerControllerTest {
         Customer customer = customerServiceImpl.getCustomers().get(0);
 
         mockMvc.perform(
-                delete("/api/v1/customer/"+customer.getId())
+                delete(CUSTOMER_PATH + "/" +customer.getId())
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNoContent());
 
@@ -61,7 +62,7 @@ class CustomerControllerTest {
     void testUpdateCustomer() throws Exception {
         Customer customer = customerServiceImpl.getCustomers().get(0);
         mockMvc.perform(
-                put("/api/v1/customer/" + customer.getId())
+                put(CUSTOMER_PATH + "/" + customer.getId())
                         .accept(MediaType.APPLICATION_JSON)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(customer))
@@ -79,7 +80,7 @@ class CustomerControllerTest {
         given(customerService.saveNewCustomer(any(Customer.class))).willReturn(customerServiceImpl.getCustomers().get(1));
 
         mockMvc.perform(
-                        post("/api/v1/customer")
+                        post(CUSTOMER_PATH)
                                 .accept(MediaType.APPLICATION_JSON)
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content(objectMapper.writeValueAsString(customer))
@@ -94,7 +95,7 @@ class CustomerControllerTest {
 
         given(customerService.getCustomerById(customer.getId())).willReturn(customer);
 
-        mockMvc.perform(get("/api/v1/customer/" + customer.getId().toString()).accept(MediaType.APPLICATION_JSON))
+        mockMvc.perform(get(CUSTOMER_PATH + "/" + customer.getId().toString()).accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.id", is(customer.getId().toString())))
@@ -105,7 +106,7 @@ class CustomerControllerTest {
     void testListCustomers() throws Exception {
         given(customerService.getCustomers()).willReturn(customerServiceImpl.getCustomers());
 
-        mockMvc.perform(get("/api/v1/customer").accept(MediaType.APPLICATION_JSON))
+        mockMvc.perform(get(CUSTOMER_PATH).accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.length()", is(3)));
