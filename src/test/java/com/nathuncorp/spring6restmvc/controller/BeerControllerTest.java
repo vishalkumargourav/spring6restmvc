@@ -1,5 +1,7 @@
 package com.nathuncorp.spring6restmvc.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nathuncorp.spring6restmvc.model.Beer;
 import com.nathuncorp.spring6restmvc.service.BeerService;
 import com.nathuncorp.spring6restmvc.service.BeerServiceImpl;
@@ -28,7 +30,17 @@ class BeerControllerTest {
     @MockitoBean
     BeerService beerService;
 
+    @Autowired
+    ObjectMapper objectMapper;
+
     BeerServiceImpl beerServiceImpl = new BeerServiceImpl();
+
+    @Test
+    void testCreateNewBeer() throws JsonProcessingException {
+        Beer beer = beerServiceImpl.listBeers().get(0);
+
+        System.out.println(objectMapper.writeValueAsString(beer));
+    }
 
     @Test
     void getBeerById() throws Exception {
