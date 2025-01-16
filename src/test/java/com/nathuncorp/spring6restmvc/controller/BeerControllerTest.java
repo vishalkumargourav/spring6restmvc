@@ -1,6 +1,5 @@
 package com.nathuncorp.spring6restmvc.controller;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nathuncorp.spring6restmvc.model.Beer;
 import com.nathuncorp.spring6restmvc.service.BeerService;
@@ -52,10 +51,10 @@ class BeerControllerTest {
         given(beerService.saveNewBeer(any(Beer.class))).willReturn(beerServiceImpl.listBeers().get(1));
 
         mockMvc.perform(
-                post("/api/v1/beer")
-                        .accept(MediaType.APPLICATION_JSON)
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(beer))
+                        post("/api/v1/beer")
+                                .accept(MediaType.APPLICATION_JSON)
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(objectMapper.writeValueAsString(beer))
                 )
                 .andExpect(status().isCreated())
                 .andExpect(header().exists("Location"));
