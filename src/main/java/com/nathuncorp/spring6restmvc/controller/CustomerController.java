@@ -1,9 +1,8 @@
 package com.nathuncorp.spring6restmvc.controller;
 
-import com.nathuncorp.spring6restmvc.model.Beer;
 import com.nathuncorp.spring6restmvc.model.Customer;
 import com.nathuncorp.spring6restmvc.service.CustomerService;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -16,26 +15,26 @@ import java.util.UUID;
 @RestController
 @Slf4j
 @RequestMapping("/api/v1/customer")
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class CustomerController {
     private final CustomerService customerService;
 
     @RequestMapping(value = "{customerId}", method = RequestMethod.DELETE)
-    public ResponseEntity deleteById(@PathVariable("customerId") UUID customerId){
+    public ResponseEntity deleteById(@PathVariable("customerId") UUID customerId) {
         customerService.deleteById(customerId);
 
         return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
 
     @RequestMapping(value = "{customerId}", method = RequestMethod.PUT)
-    public ResponseEntity updateCustomerById(@PathVariable("customerId") UUID customerId, @RequestBody Customer customer){
+    public ResponseEntity updateCustomerById(@PathVariable("customerId") UUID customerId, @RequestBody Customer customer) {
         customerService.updateCustomerById(customerId, customer);
 
         return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity createNewCustomer(@RequestBody Customer newCustomer){
+    public ResponseEntity createNewCustomer(@RequestBody Customer newCustomer) {
         log.debug("Create New Customer - in controller");
 
         Customer savedCustomer = customerService.saveNewCustomer(newCustomer);
@@ -47,14 +46,14 @@ public class CustomerController {
     }
 
     @RequestMapping(method = RequestMethod.GET)
-    public List<Customer> getAllCustomers(){
+    public List<Customer> getAllCustomers() {
         log.debug("List Customers - in controller");
 
         return customerService.getCustomers();
     }
 
     @RequestMapping(value = "{customerId}", method = RequestMethod.GET)
-    public Customer getCustomerById(@PathVariable("customerId") UUID customerId){
+    public Customer getCustomerById(@PathVariable("customerId") UUID customerId) {
         log.debug("Get Customer by Id - in controller");
 
         return customerService.getCustomerById(customerId);
