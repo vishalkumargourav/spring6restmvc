@@ -103,6 +103,13 @@ class CustomerControllerTest {
     }
 
     @Test
+    void getCustomerByIdNotFound() throws Exception {
+        given(customerService.getCustomerById(any(UUID.class))).willThrow(NotFoundException.class);
+
+        mockMvc.perform(get(CUSTOMER_PATH+"/"+UUID.randomUUID())).andExpect(status().isNotFound());
+    }
+
+    @Test
     void testListCustomers() throws Exception {
         given(customerService.getCustomers()).willReturn(customerServiceImpl.getCustomers());
 
