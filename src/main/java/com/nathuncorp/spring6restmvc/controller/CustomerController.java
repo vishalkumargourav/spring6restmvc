@@ -1,6 +1,6 @@
 package com.nathuncorp.spring6restmvc.controller;
 
-import com.nathuncorp.spring6restmvc.model.Customer;
+import com.nathuncorp.spring6restmvc.model.CustomerDTO;
 import com.nathuncorp.spring6restmvc.service.CustomerService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -30,17 +30,17 @@ public class CustomerController {
     }
 
     @RequestMapping(value = CUSTOMER_PATH_ID, method = RequestMethod.PUT)
-    public ResponseEntity updateCustomerById(@PathVariable("customerId") UUID customerId, @RequestBody Customer customer) {
+    public ResponseEntity updateCustomerById(@PathVariable("customerId") UUID customerId, @RequestBody CustomerDTO customer) {
         customerService.updateCustomerById(customerId, customer);
 
         return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
 
     @RequestMapping(value = CUSTOMER_PATH, method = RequestMethod.POST)
-    public ResponseEntity createNewCustomer(@RequestBody Customer newCustomer) {
+    public ResponseEntity createNewCustomer(@RequestBody CustomerDTO newCustomer) {
         log.debug("Create New Customer - in controller");
 
-        Customer savedCustomer = customerService.saveNewCustomer(newCustomer);
+        CustomerDTO savedCustomer = customerService.saveNewCustomer(newCustomer);
 
         HttpHeaders headers = new HttpHeaders();
         headers.add("Location", CUSTOMER_PATH + "/" + savedCustomer.getId());
@@ -49,14 +49,14 @@ public class CustomerController {
     }
 
     @RequestMapping(value = CUSTOMER_PATH, method = RequestMethod.GET)
-    public List<Customer> getAllCustomers() {
+    public List<CustomerDTO> getAllCustomers() {
         log.debug("List Customers - in controller");
 
         return customerService.getCustomers();
     }
 
     @RequestMapping(value = CUSTOMER_PATH_ID, method = RequestMethod.GET)
-    public Customer getCustomerById(@PathVariable("customerId") UUID customerId) {
+    public CustomerDTO getCustomerById(@PathVariable("customerId") UUID customerId) {
         log.debug("Get Customer by Id - in controller");
 
         return customerService.getCustomerById(customerId);

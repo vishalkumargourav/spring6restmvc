@@ -1,6 +1,6 @@
 package com.nathuncorp.spring6restmvc.controller;
 
-import com.nathuncorp.spring6restmvc.model.Beer;
+import com.nathuncorp.spring6restmvc.model.BeerDTO;
 import com.nathuncorp.spring6restmvc.service.BeerService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -29,7 +29,7 @@ public class BeerController {
     }
 
     @RequestMapping(value = BEER_PATH_ID, method = RequestMethod.PUT)
-    public ResponseEntity updateById(@PathVariable("beerId") UUID beerId, @RequestBody Beer beer) {
+    public ResponseEntity updateById(@PathVariable("beerId") UUID beerId, @RequestBody BeerDTO beer) {
         beerService.updateBeerById(beerId, beer);
 
         HttpHeaders headers = new HttpHeaders();
@@ -39,10 +39,10 @@ public class BeerController {
     }
 
     @RequestMapping(value = BEER_PATH, method = RequestMethod.POST)
-    public ResponseEntity saveNewBeer(@RequestBody Beer beer) {
+    public ResponseEntity saveNewBeer(@RequestBody BeerDTO beer) {
         log.debug("Save New Beer - in controller");
 
-        Beer savedBeer = beerService.saveNewBeer(beer);
+        BeerDTO savedBeer = beerService.saveNewBeer(beer);
 
         HttpHeaders headers = new HttpHeaders();
         headers.add("Location", BEER_PATH + "/" + savedBeer.getId().toString());
@@ -51,14 +51,14 @@ public class BeerController {
     }
 
     @RequestMapping(value = BEER_PATH, method = RequestMethod.GET)
-    public List<Beer> listBeers() {
+    public List<BeerDTO> listBeers() {
         log.debug("List Beers - in controller 1234");
 
         return beerService.listBeers();
     }
 
     @RequestMapping(value = BEER_PATH_ID, method = RequestMethod.GET)
-    public Beer getBeerById(@PathVariable("beerId") UUID beerId) {
+    public BeerDTO getBeerById(@PathVariable("beerId") UUID beerId) {
         log.debug("Get Beer By ID - in controller");
 
         return beerService.getBeerById(beerId);
