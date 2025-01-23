@@ -2,7 +2,6 @@ package com.nathuncorp.spring6restmvc.entities;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.UuidGenerator;
 
 import java.time.LocalDateTime;

@@ -3,7 +3,6 @@ package com.nathuncorp.spring6restmvc.entities;
 import com.nathuncorp.spring6restmvc.model.BeerStyle;
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.UuidGenerator;
 
 import java.math.BigDecimal;
