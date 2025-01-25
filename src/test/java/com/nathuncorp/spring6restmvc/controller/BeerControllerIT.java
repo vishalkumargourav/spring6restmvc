@@ -1,6 +1,7 @@
 package com.nathuncorp.spring6restmvc.controller;
 
 import com.nathuncorp.spring6restmvc.entities.Beer;
+import com.nathuncorp.spring6restmvc.mapper.BeerMapper;
 import com.nathuncorp.spring6restmvc.model.BeerDTO;
 import com.nathuncorp.spring6restmvc.model.BeerStyle;
 import com.nathuncorp.spring6restmvc.repository.BeerRepository;
@@ -24,6 +25,25 @@ class BeerControllerIT {
     BeerController beerController;
     @Autowired
     BeerRepository beerRepository;
+    @Autowired
+    BeerMapper beerMapper;
+
+    @Test
+    void testUpdateBeerById() {
+        Beer beer = beerRepository.findAll().get(0);
+        BeerDTO beerDTO = beerMapper.beerToBeerDTO(beer);
+        beerDTO.setId(null);
+        beerDTO.setVersion(null);
+        final String updateName = "New Beer Name";
+        beerDTO.setBeerName(updateName);
+
+        ResponseEntity responseEntity = beerController.updateById(beer.getId(), beerDTO);
+
+        assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatusCode.valueOf(204));
+
+        Beer updateBeer = beerRepository.findById(beer.getId()).get();
+        assertThat(updateBeer.getBeerName()).isEqualTo(updateName);
+    }
 
     @Test
     void testBeerByIdNotFoundException() {
