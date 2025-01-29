@@ -99,4 +99,16 @@ class BeerControllerIT {
         Beer beer = beerRepository.findById(uuid).get();
         assertThat(beer).isNotNull();
     }
+
+    @Test
+    @Transactional
+    @Rollback
+    void deleteBeerById() {
+        Beer beer = beerRepository.findAll().get(0);
+
+        ResponseEntity responseEntity = beerController.deleteById(beer.getId());
+
+        assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatusCode.valueOf(204));
+        assertThat(beerRepository.findAll().size()).isEqualTo(2);
+    }
 }
